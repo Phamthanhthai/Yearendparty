@@ -167,8 +167,16 @@ const allow=["nga","hoa","trang","thai"];
 
 /* ===== POPUP ===== */
 const popup=document.getElementById("popup");
-document.getElementById("closePopup").onclick=()=>popup.classList.add("hidden");
-popup.onclick=e=>{if(e.target===popup)popup.classList.add("hidden")}
+document.getElementById("closePopup").onclick = (e) => {
+  e.stopPropagation();       // ⛔ chặn bubbling
+  popup.classList.add("hidden");
+};
+
+popup.onclick = (e) => {
+  if (e.target === popup) {
+    popup.classList.add("hidden");
+  }
+};
 
 /* ===== FLOW ===== */
 const step1=document.getElementById("step1");
