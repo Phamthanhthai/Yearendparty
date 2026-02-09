@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Tất niên Gia Đình Nhà Táo</title>
 
-<!-- Giảm cache (không đảm bảo 100% vì CDN, nhưng giúp đỡ hơn) -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
@@ -27,7 +26,6 @@ html,body{
     radial-gradient(1000px 600px at 90% -10%, rgba(179,0,0,.35), transparent 60%),
     linear-gradient(180deg,#000,#120000);
 }
-
 .center{
   min-height:100vh;
   display:flex;
@@ -74,8 +72,6 @@ input{
 }
 .small{opacity:.78;font-size:13px;margin-top:8px;line-height:1.35}
 .hidden{display:none}
-
-/* Invite */
 .wrap{max-width:760px;margin:auto;padding:16px}
 .invite{
   display:none;
@@ -85,10 +81,7 @@ input{
   border-radius:20px;
   box-shadow:0 30px 70px rgba(0,0,0,.55);
 }
-.top{
-  text-align:center;
-  padding:10px 6px 0;
-}
+.top{text-align:center}
 .badge{
   display:inline-block;
   padding:8px 16px;
@@ -96,16 +89,8 @@ input{
   background:linear-gradient(90deg,var(--gold),#fff2a8);
   color:#4b2c00;
   font-weight:900;
-  letter-spacing:.4px;
 }
-.top h2{margin:10px 0 6px}
-.top p{margin:0;opacity:.9}
-
-.grid{
-  margin-top:14px;
-  display:grid;
-  gap:10px;
-}
+.grid{margin-top:14px;display:grid;gap:10px}
 .box{
   background:var(--card2);
   border:1px solid rgba(255,255,255,.12);
@@ -113,29 +98,11 @@ input{
   border-radius:12px;
 }
 .box b{color:var(--gold)}
-iframe.map{
-  border-radius:14px;
-  border:0;
-  width:100%;
-  height:260px;
-  margin-top:12px;
-}
-.row{
-  display:grid;
-  gap:10px;
-  margin-top:12px;
-}
-@media (min-width:720px){
-  .row{grid-template-columns:1fr 1fr}
-}
-
-/* Countdown */
 .countdown{
   margin-top:12px;
   display:flex;
   gap:10px;
   justify-content:center;
-  flex-wrap:wrap;
 }
 .timebox{
   min-width:92px;
@@ -145,22 +112,14 @@ iframe.map{
   padding:10px 12px;
 }
 .timebox .num{font-size:26px;font-weight:900}
-.timebox .lbl{font-size:12px;opacity:.85}
-
-/* Music mini player */
-.player{
-  margin-top:12px;
-  background:rgba(0,0,0,.22);
-  border:1px solid rgba(255,255,255,.14);
+.timebox .lbl{font-size:12px}
+iframe.map{
   border-radius:14px;
-  padding:12px;
+  border:0;
+  width:100%;
+  height:260px;
+  margin-top:12px;
 }
-.player .title{font-weight:800}
-.player .hint{font-size:12px;opacity:.8;margin-top:6px}
-.player .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.player .controls button{flex:1}
-
-/* Fireworks */
 canvas{position:fixed;inset:0;pointer-events:none}
 </style>
 </head>
@@ -174,8 +133,8 @@ canvas{position:fixed;inset:0;pointer-events:none}
   <div class="panel">
     <h2>🎉 Nhập tên của bạn</h2>
     <div class="small">Chỉ dành cho: <b>Nga</b> • <b>Hoà</b> • <b>Trang</b> • <b>Thái</b></div>
-    <input id="guestName" placeholder="Ví dụ: Thái" autocomplete="off"/>
-    <button class="btn" id="btnNext" type="button">Tiếp tục</button>
+    <input id="guestName" placeholder="Ví dụ: Thái"/>
+    <button class="btn" id="btnNext">Tiếp tục</button>
     <div class="small" id="err"></div>
   </div>
 </div>
@@ -184,9 +143,8 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="center hidden" id="step2">
   <div class="panel">
     <h2 id="ask"></h2>
-    <button class="btn" id="btnYes" type="button">Có, mình tham gia 🎊</button>
-    <button class="btn secondary" id="btnNo" type="button">Không tham gia 😢</button>
-    <div class="small" style="margin-top:10px;opacity:.75">Bấm chọn giúp gia đình mình chuẩn bị nhé 🍎</div>
+    <button class="btn" id="btnYes">Có, mình tham gia 🎊</button>
+    <button class="btn secondary" id="btnNo">Không tham gia 😢</button>
   </div>
 </div>
 
@@ -196,269 +154,102 @@ canvas{position:fixed;inset:0;pointer-events:none}
     <div class="top">
       <div class="badge">TẤT NIÊN GIA ĐÌNH NHÀ TÁO</div>
       <h2 id="guest"></h2>
-      <p>Cuối năm rồi, mình hẹn nhau tụ họp ăn uống & tám chuyện cho vui nha ❤️</p>
+      <p>Cuối năm rồi, mình hẹn nhau tụ họp ăn uống & tám chuyện cho vui ❤️</p>
 
-      <!-- Countdown -->
-      <div class="countdown" aria-label="Đếm ngược">
-        <div class="timebox"><div class="num" id="d">--</div><div class="lbl">Ngày</div></div>
-        <div class="timebox"><div class="num" id="h">--</div><div class="lbl">Giờ</div></div>
-        <div class="timebox"><div class="num" id="m">--</div><div class="lbl">Phút</div></div>
-        <div class="timebox"><div class="num" id="s">--</div><div class="lbl">Giây</div></div>
+      <div class="countdown">
+        <div class="timebox"><div class="num" id="d">00</div><div class="lbl">Ngày</div></div>
+        <div class="timebox"><div class="num" id="h">00</div><div class="lbl">Giờ</div></div>
+        <div class="timebox"><div class="num" id="m">00</div><div class="lbl">Phút</div></div>
+        <div class="timebox"><div class="num" id="s">00</div><div class="lbl">Giây</div></div>
       </div>
       <div class="small" id="countHint"></div>
     </div>
 
-    <div class="row">
-      <div class="grid">
-        <div class="box">📍 <b>Địa điểm:</b> Linh Cháo (Đồi Rada)</div>
-        <div class="box">⏰ <b>Giờ:</b> 19h30</div>
-        <div class="box">👨‍👩‍👧‍👦 <b>Nhóm:</b> Gia Đình Nhà Táo</div>
-        <div class="box">✅ <b>Trạng thái:</b> <span id="statusText">—</span></div>
-      </div>
-
-      <div>
-        <div class="player">
-          <div class="title">🎵 Nhạc Tết</div>
-          <div class="hint">Do trình duyệt chặn tự phát, bạn cần bấm “Bật nhạc” một lần nhé.</div>
-          <div class="controls">
-            <button class="btn" id="musicToggle" type="button">▶ Bật nhạc</button>
-            <button class="btn secondary" id="boomBtn" type="button">🎆 Bắn pháo hoa</button>
-          </div>
-
-          <!-- YouTube player (ẩn) -->
-          <div id="ytWrap" style="margin-top:10px;display:none">
-            <div id="player"></div>
-            <div class="small">Nếu không nghe thấy, hãy bấm lại “Bật nhạc”.</div>
-          </div>
-        </div>
-      </div>
+    <div class="grid">
+      <div class="box">📍 <b>Địa điểm:</b> Linh Cháo (Đồi Rada)</div>
+      <div class="box">⏰ <b>Giờ:</b> 19h30</div>
+      <div class="box">👨‍👩‍👧‍👦 <b>Nhóm:</b> Gia Đình Nhà Táo</div>
+      <div class="box">✅ <b>Trạng thái:</b> <span id="statusText"></span></div>
     </div>
 
-    <!-- Google Map -->
     <iframe class="map"
-      src="https://www.google.com/maps?q=Linh%20Ch%C3%A1o%20%C4%90%E1%BB%93i%20Rada&output=embed"
-      loading="lazy">
+      src="https://www.google.com/maps?q=Linh%20Ch%C3%A1o%20%C4%90%E1%BB%93i%20Rada&output=embed">
     </iframe>
 
     <div class="small" style="text-align:center;margin-top:10px">
-      📌 Link chỉ đường (Google Maps): 
-      <a href="https://maps.app.goo.gl/bnpZXjber8uW5tyDA?g_st=ipc" target="_blank" rel="noopener noreferrer"
-         style="color:#ffe9a6;text-decoration:underline">Mở Google Maps</a>
-    </div>
-
-    <div class="small" style="text-align:center;margin-top:10px;opacity:.85">
-      Hẹn gặp bạn lúc 19h30 nha 🍻
+      ⏳ 19h30 ngày <b>14/02</b> • <b>27 âm</b>
     </div>
   </div>
 </div>
 
-<!-- YouTube IFrame API -->
-<script src="https://www.youtube.com/iframe_api"></script>
-
 <script>
-/* ================== Fireworks ================== */
-const cv = document.getElementById("fx");
-const ctx = cv.getContext("2d");
-let W,H; function resize(){ W=cv.width=innerWidth; H=cv.height=innerHeight; }
-resize(); addEventListener("resize", resize);
-
-let parts = [];
-function boom(x0,y0){
-  for(let i=0;i<70;i++){
-    parts.push({x:x0,y:y0,a:Math.random()*Math.PI*2,s:Math.random()*5+2});
-  }
+/* ================= FIREWORK ================= */
+const cv=document.getElementById("fx"),ctx=cv.getContext("2d");
+function rs(){cv.width=innerWidth;cv.height=innerHeight}
+rs();addEventListener("resize",rs);
+let parts=[];
+function boom(x,y){
+  for(let i=0;i<70;i++)
+    parts.push({x,y,a:Math.random()*6.28,s:Math.random()*5+2});
 }
 (function anim(){
-  ctx.clearRect(0,0,W,H);
-  for(const p of parts){
-    p.x += Math.cos(p.a)*p.s;
-    p.y += Math.sin(p.a)*p.s;
-    p.s *= 0.95;
-    ctx.fillStyle = "gold";
+  ctx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{
+    p.x+=Math.cos(p.a)*p.s;
+    p.y+=Math.sin(p.a)*p.s;
+    p.s*=.95;
+    ctx.fillStyle="gold";
     ctx.fillRect(p.x,p.y,3,3);
-  }
-  parts = parts.filter(p=>p.s>0.6);
+  });
+  parts=parts.filter(p=>p.s>.6);
   requestAnimationFrame(anim);
 })();
 
-function boomCorners(){
-  boom(0,0); boom(W,0); boom(0,H); boom(W,H);
-}
+/* ================= COUNTDOWN FIXED ================= */
+// ⚠️ ĐỔI NĂM NẾU CẦN
+const TARGET = new Date(2026,1,14,19,30,0,0);
 
-/* ================== Normalize Vietnamese ================== */
-function normalizeVN(str){
-  return str
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/đ/g,"d")
-    .trim();
-}
+const dEl=d,hEl=h,mEl=m,sEl=s;
+function pad(n){return String(n).padStart(2,"0")}
+function tick(){
+  const now=new Date();
+  let diff=TARGET-now;
 
-/* ================== DOM ================== */
-const inputName = document.getElementById("guestName");
-const err = document.getElementById("err");
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const ask = document.getElementById("ask");
-
-const invite = document.getElementById("invite");
-const guest = document.getElementById("guest");
-const statusText = document.getElementById("statusText");
-
-const btnNext = document.getElementById("btnNext");
-const btnYes = document.getElementById("btnYes");
-const btnNo  = document.getElementById("btnNo");
-const boomBtn = document.getElementById("boomBtn");
-
-const dEl=document.getElementById("d");
-const hEl=document.getElementById("h");
-const mEl=document.getElementById("m");
-const sEl=document.getElementById("s");
-const countHint=document.getElementById("countHint");
-
-/* ================== Rules ================== */
-const allow = ["nga","hoa","trang","thai"];
-
-/* ================== Countdown to 19:30 ================== */
-function getNext1930(){
-  const now = new Date();
-  const t = new Date(now);
-  t.setHours(19,30,0,0);
-  if(t.getTime() <= now.getTime()){
-    t.setDate(t.getDate()+1);
-  }
-  return t;
-}
-let target = getNext1930();
-
-function pad2(n){ return String(n).padStart(2,"0"); }
-
-function tickCountdown(){
-  const now = new Date();
-  let diff = target.getTime() - now.getTime();
-
-  if(diff <= 0){
-    // đã tới giờ => đặt lại sang ngày mai 19:30
-    target = getNext1930();
-    diff = target.getTime() - now.getTime();
-  }
-
-  const sec = Math.floor(diff/1000);
-  const days = Math.floor(sec/86400);
-  const hours = Math.floor((sec%86400)/3600);
-  const mins = Math.floor((sec%3600)/60);
-  const secs = sec%60;
-
-  dEl.textContent = pad2(days);
-  hEl.textContent = pad2(hours);
-  mEl.textContent = pad2(mins);
-  sEl.textContent = pad2(secs);
-
-  // gợi ý ngày giờ mục tiêu
-  const dd = pad2(target.getDate());
-  const MM = pad2(target.getMonth()+1);
-  countHint.textContent = `⏳ Đếm ngược tới 19h30 (${dd}/${MM})`;
-}
-setInterval(tickCountdown, 1000);
-tickCountdown();
-
-/* ================== Flow ================== */
-function goNext(){
-  const raw = inputName.value.trim();
-  const n = normalizeVN(raw);
-
-  if(!allow.includes(n)){
-    err.textContent = "Tên này không nằm trong danh sách gia đình 😊";
+  if(diff<=0){
+    dEl.textContent=hEl.textContent=mEl.textContent=sEl.textContent="00";
+    countHint.textContent="🎉 Đã tới giờ 19h30 (14/02 • 27 âm)";
     return;
   }
+  const sec=Math.floor(diff/1000);
+  dEl.textContent=pad(Math.floor(sec/86400));
+  hEl.textContent=pad(Math.floor(sec%86400/3600));
+  mEl.textContent=pad(Math.floor(sec%3600/60));
+  sEl.textContent=pad(sec%60);
+  countHint.textContent="⏳ Đếm ngược tới 19h30 (14/02 • 27 âm)";
+}
+setInterval(tick,1000);tick();
 
-  err.textContent = "";
+/* ================= FLOW ================= */
+const allow=["nga","hoa","trang","thai"];
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d")}
+btnNext.onclick=()=>{
+  const raw=guestName.value.trim();
+  if(!allow.includes(norm(raw))){
+    err.textContent="Tên này không nằm trong danh sách 😊";return;
+  }
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
-  ask.textContent = `${raw} ơi, tối nay đi tất niên cùng gia đình nhé?`;
+  ask.textContent=`${raw} ơi, tối nay đi tất niên nhé?`;
 }
-
+btnYes.onclick=()=>finish(true);
+btnNo.onclick=()=>finish(false);
 function finish(ok){
-  const raw = inputName.value.trim();
-
-  // lưu local
-  localStorage.setItem("yearend_"+raw, ok ? "Có" : "Không");
-
   step2.classList.add("hidden");
   invite.style.display="block";
-  guest.textContent = `${raw} thân mến`;
-
-  statusText.textContent = ok ? "Có tham gia 🎉" : "Không tham gia 😢";
-
-  if(ok) boomCorners();
+  guest.textContent=`${guestName.value} thân mến`;
+  statusText.textContent=ok?"Có tham gia 🎉":"Không tham gia 😢";
+  if(ok) boom(innerWidth/2,innerHeight/2);
 }
-
-btnNext.addEventListener("click", goNext);
-inputName.addEventListener("keydown", (e)=>{
-  if(e.key === "Enter"){ e.preventDefault(); goNext(); }
-});
-btnYes.addEventListener("click", ()=>finish(true));
-btnNo.addEventListener("click", ()=>finish(false));
-boomBtn.addEventListener("click", boomCorners);
-
-/* ================== YouTube Music ================== */
-let ytPlayer = null;
-let ytReady = false;
-let playing = false;
-
-// Video ID của link bạn gửi: KdG2k8WHexA
-const YT_VIDEO_ID = "KdG2k8WHexA";
-
-function onYouTubeIframeAPIReady(){
-  ytPlayer = new YT.Player("player", {
-    height: "220",
-    width: "100%",
-    videoId: YT_VIDEO_ID,
-    playerVars: {
-      autoplay: 0,
-      controls: 1,
-      rel: 0,
-      modestbranding: 1,
-      playsinline: 1
-    },
-    events: {
-      onReady: () => { ytReady = true; },
-      onStateChange: (e) => {
-        // 1 = playing, 2 = paused
-        if(e.data === 1){
-          playing = true;
-          document.getElementById("musicToggle").textContent = "⏸ Tắt nhạc";
-        }else if(e.data === 2 || e.data === 0){
-          playing = false;
-          document.getElementById("musicToggle").textContent = "▶ Bật nhạc";
-        }
-      }
-    }
-  });
-}
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-
-const musicToggle = document.getElementById("musicToggle");
-const ytWrap = document.getElementById("ytWrap");
-
-musicToggle.addEventListener("click", ()=>{
-  ytWrap.style.display = "block";
-
-  // API có thể chưa kịp ready trong vài tích tắc
-  if(!ytPlayer || !ytReady){
-    // cố gắng lại sau 300ms
-    setTimeout(()=>musicToggle.click(), 300);
-    return;
-  }
-
-  if(!playing){
-    ytPlayer.playVideo(); // cần user click => OK
-    boomCorners();
-  }else{
-    ytPlayer.pauseVideo();
-  }
-});
 </script>
 
 </body>
