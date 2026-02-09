@@ -5,15 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Tất niên Gia Đình Nhà Táo</title>
 
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-<meta http-equiv="Pragma" content="no-cache"/>
-<meta http-equiv="Expires" content="0"/>
-
 <style>
-:root{
-  --gold:#ffd666;
-  --text:#fff;
-}
+:root{--gold:#ffd666;--text:#fff}
 *{box-sizing:border-box}
 html,body{
   margin:0;height:100%;
@@ -24,19 +17,18 @@ html,body{
     radial-gradient(1000px 600px at 90% -10%, rgba(179,0,0,.35), transparent 60%),
     linear-gradient(180deg,#000,#120000);
 }
-.center{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;
-}
+.center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
 .panel{
   background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);
-  padding:22px;border-radius:18px;max-width:420px;width:100%;text-align:center;
+  border:1px solid rgba(255,255,255,.15);
+  padding:22px;border-radius:18px;
+  max-width:420px;width:100%;text-align:center;
   box-shadow:0 30px 70px rgba(0,0,0,.6);
 }
 input{
   width:100%;padding:12px;border-radius:12px;
   border:1px solid rgba(255,255,255,.22);
-  background:rgba(0,0,0,.2);color:#fff;margin-top:10px;
+  background:rgba(0,0,0,.25);color:#fff;margin-top:10px;
 }
 .btn{
   margin-top:12px;width:100%;padding:12px;border-radius:14px;
@@ -54,11 +46,10 @@ input{
   display:flex;align-items:center;justify-content:center;z-index:9999;
 }
 .popup-box{
-  background:rgba(20,0,0,.95);
+  background:rgba(30,0,0,.95);
   border:1px solid rgba(255,255,255,.2);
   border-radius:18px;padding:22px;max-width:320px;text-align:center;
 }
-.popup-box h3{margin:0 0 10px}
 
 /* INVITE */
 .wrap{max-width:760px;margin:auto;padding:16px}
@@ -73,23 +64,20 @@ input{
   color:#4b2c00;font-weight:900;
 }
 .countdown{
-  display:flex;gap:10px;justify-content:center;margin:14px 0;
+  display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap;
 }
 .timebox{
   background:rgba(0,0,0,.3);padding:10px 14px;border-radius:14px;
 }
 .timebox .num{font-size:26px;font-weight:900}
 
-/* SAD TABLE */
+/* SAD */
 .sad{
   margin-top:20px;
-  background:rgba(0,0,0,.4);
+  background:rgba(0,0,0,.45);
   border:1px dashed rgba(255,255,255,.25);
   padding:20px;border-radius:18px;
-  text-align:center;
-  opacity:.9;
 }
-.sad h3{margin-bottom:10px}
 canvas{position:fixed;inset:0;pointer-events:none}
 </style>
 </head>
@@ -102,6 +90,7 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="center" id="step1">
   <div class="panel">
     <h2>🎉 Nhập tên của bạn</h2>
+    <p>Chỉ dành cho: <b>Nga</b> • <b>Hoà</b> • <b>Trang</b> • <b>Thái</b></p>
     <input id="guestName" placeholder="Ví dụ: Thái"/>
     <button class="btn" id="btnNext">Tiếp tục</button>
   </div>
@@ -129,8 +118,8 @@ canvas{position:fixed;inset:0;pointer-events:none}
         <div class="timebox"><div class="num" id="m">--</div>Phút</div>
         <div class="timebox"><div class="num" id="s">--</div>Giây</div>
       </div>
-      <div>⏳ 19h30 – 14/02 (27 Âm)</div>
 
+      <p>⏳ <b>19h30 – 14/02 (27 Âm)</b></p>
       <div id="status"></div>
     </div>
   </div>
@@ -141,12 +130,12 @@ canvas{position:fixed;inset:0;pointer-events:none}
   <div class="popup-box">
     <h3>❌ Không hợp lệ</h3>
     <p>Tên này không nằm trong gia đình chúng tôi</p>
-    <button class="btn" onclick="closePopup()">Đã hiểu</button>
+    <button class="btn" id="closePopup">Đã hiểu</button>
   </div>
 </div>
 
 <script>
-/* FIREWORKS */
+/* ===== FIREWORKS ===== */
 const c=document.getElementById("fx"),x=c.getContext("2d");
 let W,H;function rs(){W=c.width=innerWidth;H=c.height=innerHeight}
 rs();addEventListener("resize",rs);
@@ -168,24 +157,40 @@ function boom(x0,y0){
   requestAnimationFrame(draw);
 })();
 
-/* UTIL */
+/* ===== UTIL ===== */
 function norm(s){
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").trim();
+  return s.toLowerCase().normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/đ/g,"d").trim();
 }
 const allow=["nga","hoa","trang","thai"];
 
-/* POPUP */
-function showPopup(){popup.classList.remove("hidden")}
-function closePopup(){popup.classList.add("hidden")}
+/* ===== POPUP ===== */
+const popup=document.getElementById("popup");
+document.getElementById("closePopup").onclick=()=>popup.classList.add("hidden");
+popup.onclick=e=>{if(e.target===popup)popup.classList.add("hidden")}
 
-/* FLOW */
+/* ===== FLOW ===== */
+const step1=document.getElementById("step1");
+const step2=document.getElementById("step2");
+const invite=document.getElementById("invite");
+const guest=document.getElementById("guest");
+const ask=document.getElementById("ask");
+const status=document.getElementById("status");
+const guestName=document.getElementById("guestName");
+
 btnNext.onclick=()=>{
   const raw=guestName.value.trim();
-  if(!allow.includes(norm(raw))){showPopup();return;}
+  if(raw==="") return;                // ⛔ chưa nhập thì không làm gì
+  if(!allow.includes(norm(raw))){
+    popup.classList.remove("hidden");
+    return;
+  }
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
   ask.innerText=`${raw} ơi, tối nay đi tất niên cùng gia đình nhé?`;
 };
+
 yes.onclick=()=>finish(true);
 no.onclick=()=>finish(false);
 
@@ -201,22 +206,22 @@ function finish(ok){
     status.innerHTML=`
       <div class="sad">
         <h3>🥀 Bàn tiệc hôm nay thật buồn…</h3>
-        <p>Vì thiếu vắng bạn, bữa tiệc không còn trọn vẹn như mong đợi 😔</p>
+        <p>Vì thiếu vắng bạn, bữa tiệc không còn trọn vẹn 😔</p>
       </div>`;
   }
 }
 
-/* COUNTDOWN 14/02 19:30 */
-const target=new Date(new Date().getFullYear(),1,14,19,30,0,0);
+/* ===== COUNTDOWN 14/02 19:30 ===== */
+const target=new Date(new Date().getFullYear(),1,14,19,30);
 if(new Date()>target)target.setFullYear(target.getFullYear()+1);
+
 setInterval(()=>{
   let diff=target-new Date();
-  const s=Math.floor(diff/1000);
+  const s=Math.max(0,Math.floor(diff/1000));
   d.innerText=Math.floor(s/86400);
   h.innerText=Math.floor(s%86400/3600);
   m.innerText=Math.floor(s%3600/60);
-  sEl=s%60;
-  document.getElementById("s").innerText=sEl;
+  document.getElementById("s").innerText=s%60;
 },1000);
 </script>
 
