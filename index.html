@@ -5,8 +5,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Tất niên Gia Đình Nhà Táo</title>
 
+<!-- Giảm cache (không đảm bảo 100% vì CDN, nhưng giúp đỡ hơn) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+
 <style>
-:root{--gold:#ffd666;--text:#fff}
+:root{
+  --gold:#ffd666;
+  --card:rgba(255,255,255,.10);
+  --card2:rgba(255,255,255,.06);
+  --text:#fff;
+}
 *{box-sizing:border-box}
 html,body{
   margin:0;height:100%;
@@ -17,67 +27,140 @@ html,body{
     radial-gradient(1000px 600px at 90% -10%, rgba(179,0,0,.35), transparent 60%),
     linear-gradient(180deg,#000,#120000);
 }
-.center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
-.panel{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  padding:22px;border-radius:18px;
-  max-width:420px;width:100%;text-align:center;
-  box-shadow:0 30px 70px rgba(0,0,0,.6);
+
+.center{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
 }
+.panel{
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+  padding:22px;
+  border-radius:18px;
+  max-width:420px;
+  width:100%;
+  text-align:center;
+  backdrop-filter: blur(10px);
+}
+h2{margin:0 0 10px}
 input{
-  width:100%;padding:12px;border-radius:12px;
+  width:100%;
+  padding:12px;
+  border-radius:12px;
   border:1px solid rgba(255,255,255,.22);
-  background:rgba(0,0,0,.25);color:#fff;margin-top:10px;
+  background:rgba(0,0,0,.15);
+  color:#fff;
+  margin-top:10px;
 }
 .btn{
-  margin-top:12px;width:100%;padding:12px;border-radius:14px;
-  border:none;font-weight:800;cursor:pointer;
-  background:linear-gradient(90deg,var(--gold),#fff2a8);color:#4b2c00;
+  margin-top:12px;
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  font-weight:800;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--gold),#fff2a8);
+  color:#4b2c00;
 }
 .btn.secondary{
-  background:rgba(0,0,0,.35);color:#fff;border:1px solid rgba(255,255,255,.2);
+  background:rgba(0,0,0,.25);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.20);
 }
+.small{opacity:.78;font-size:13px;margin-top:8px;line-height:1.35}
 .hidden{display:none}
 
-/* POPUP */
-.popup{
-  position:fixed;inset:0;background:rgba(0,0,0,.65);
-  display:flex;align-items:center;justify-content:center;z-index:9999;
-}
-.popup-box{
-  background:rgba(30,0,0,.95);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:18px;padding:22px;max-width:320px;text-align:center;
-}
-
-/* INVITE */
+/* Invite */
 .wrap{max-width:760px;margin:auto;padding:16px}
 .invite{
   display:none;
-  background:rgba(255,255,255,.08);
-  border-radius:20px;padding:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.14);
+  padding:18px;
+  border-radius:20px;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.top{
+  text-align:center;
+  padding:10px 6px 0;
 }
 .badge{
-  display:inline-block;padding:8px 16px;border-radius:999px;
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:999px;
   background:linear-gradient(90deg,var(--gold),#fff2a8);
-  color:#4b2c00;font-weight:900;
+  color:#4b2c00;
+  font-weight:900;
+  letter-spacing:.4px;
 }
+.top h2{margin:10px 0 6px}
+.top p{margin:0;opacity:.9}
+
+.grid{
+  margin-top:14px;
+  display:grid;
+  gap:10px;
+}
+.box{
+  background:var(--card2);
+  border:1px solid rgba(255,255,255,.12);
+  padding:12px;
+  border-radius:12px;
+}
+.box b{color:var(--gold)}
+iframe.map{
+  border-radius:14px;
+  border:0;
+  width:100%;
+  height:260px;
+  margin-top:12px;
+}
+.row{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+@media (min-width:720px){
+  .row{grid-template-columns:1fr 1fr}
+}
+
+/* Countdown */
 .countdown{
-  display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap;
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 .timebox{
-  background:rgba(0,0,0,.3);padding:10px 14px;border-radius:14px;
+  min-width:92px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:10px 12px;
 }
 .timebox .num{font-size:26px;font-weight:900}
+.timebox .lbl{font-size:12px;opacity:.85}
 
-/* SAD */
-.sad{
-  margin-top:20px;
-  background:rgba(0,0,0,.45);
-  border:1px dashed rgba(255,255,255,.25);
-  padding:20px;border-radius:18px;
+/* Music mini player */
+.player{
+  margin-top:12px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:12px;
 }
+.player .title{font-weight:800}
+.player .hint{font-size:12px;opacity:.8;margin-top:6px}
+.player .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.player .controls button{flex:1}
+
+/* Fireworks */
 canvas{position:fixed;inset:0;pointer-events:none}
 </style>
 </head>
@@ -90,9 +173,10 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="center" id="step1">
   <div class="panel">
     <h2>🎉 Nhập tên của bạn</h2>
-    <p>Chỉ dành cho: <b>Nga</b> • <b>Hoà</b> • <b>Trang</b> • <b>Thái</b></p>
-    <input id="guestName" placeholder="Ví dụ: Thái"/>
-    <button class="btn" id="btnNext">Tiếp tục</button>
+    <div class="small">Chỉ dành cho: <b>Nga</b> • <b>Hoà</b> • <b>Trang</b> • <b>Thái</b></div>
+    <input id="guestName" placeholder="Ví dụ: Thái" autocomplete="off"/>
+    <button class="btn" id="btnNext" type="button">Tiếp tục</button>
+    <div class="small" id="err"></div>
   </div>
 </div>
 
@@ -100,137 +184,281 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class="center hidden" id="step2">
   <div class="panel">
     <h2 id="ask"></h2>
-    <button class="btn" id="yes">Có, mình tham gia 🎊</button>
-    <button class="btn secondary" id="no">Không tham gia 😢</button>
+    <button class="btn" id="btnYes" type="button">Có, mình tham gia 🎊</button>
+    <button class="btn secondary" id="btnNo" type="button">Không tham gia 😢</button>
+    <div class="small" style="margin-top:10px;opacity:.75">Bấm chọn giúp gia đình mình chuẩn bị nhé 🍎</div>
   </div>
 </div>
 
 <!-- INVITE -->
 <div class="wrap">
   <div class="invite" id="invite">
-    <div style="text-align:center">
+    <div class="top">
       <div class="badge">TẤT NIÊN GIA ĐÌNH NHÀ TÁO</div>
       <h2 id="guest"></h2>
+      <p>Cuối năm rồi, mình hẹn nhau tụ họp ăn uống & tám chuyện cho vui nha ❤️</p>
 
-      <div class="countdown">
-        <div class="timebox"><div class="num" id="d">--</div>Ngày</div>
-        <div class="timebox"><div class="num" id="h">--</div>Giờ</div>
-        <div class="timebox"><div class="num" id="m">--</div>Phút</div>
-        <div class="timebox"><div class="num" id="s">--</div>Giây</div>
+      <!-- Countdown -->
+      <div class="countdown" aria-label="Đếm ngược">
+        <div class="timebox"><div class="num" id="d">--</div><div class="lbl">Ngày</div></div>
+        <div class="timebox"><div class="num" id="h">--</div><div class="lbl">Giờ</div></div>
+        <div class="timebox"><div class="num" id="m">--</div><div class="lbl">Phút</div></div>
+        <div class="timebox"><div class="num" id="s">--</div><div class="lbl">Giây</div></div>
+      </div>
+      <div class="small" id="countHint"></div>
+    </div>
+
+    <div class="row">
+      <div class="grid">
+        <div class="box">📍 <b>Địa điểm:</b> Linh Cháo (Đồi Rada)</div>
+        <div class="box">⏰ <b>Giờ:</b> 19h30</div>
+        <div class="box">👨‍👩‍👧‍👦 <b>Nhóm:</b> Gia Đình Nhà Táo</div>
+        <div class="box">✅ <b>Trạng thái:</b> <span id="statusText">—</span></div>
       </div>
 
-      <p>⏳ <b>19h30 – 14/02 (27 Âm)</b></p>
-      <div id="status"></div>
+      <div>
+        <div class="player">
+          <div class="title">🎵 Nhạc Tết</div>
+          <div class="hint">Do trình duyệt chặn tự phát, bạn cần bấm “Bật nhạc” một lần nhé.</div>
+          <div class="controls">
+            <button class="btn" id="musicToggle" type="button">▶ Bật nhạc</button>
+            <button class="btn secondary" id="boomBtn" type="button">🎆 Bắn pháo hoa</button>
+          </div>
+
+          <!-- YouTube player (ẩn) -->
+          <div id="ytWrap" style="margin-top:10px;display:none">
+            <div id="player"></div>
+            <div class="small">Nếu không nghe thấy, hãy bấm lại “Bật nhạc”.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Map -->
+    <iframe class="map"
+      src="https://www.google.com/maps?q=Linh%20Ch%C3%A1o%20%C4%90%E1%BB%93i%20Rada&output=embed"
+      loading="lazy">
+    </iframe>
+
+    <div class="small" style="text-align:center;margin-top:10px">
+      📌 Link chỉ đường (Google Maps): 
+      <a href="https://maps.app.goo.gl/bnpZXjber8uW5tyDA?g_st=ipc" target="_blank" rel="noopener noreferrer"
+         style="color:#ffe9a6;text-decoration:underline">Mở Google Maps</a>
+    </div>
+
+    <div class="small" style="text-align:center;margin-top:10px;opacity:.85">
+      Hẹn gặp bạn lúc 19h30 nha 🍻
     </div>
   </div>
 </div>
 
-<!-- POPUP -->
-<div id="popup" class="popup hidden">
-  <div class="popup-box">
-    <h3>❌ Không hợp lệ</h3>
-    <p>Tên này không nằm trong gia đình chúng tôi</p>
-    <button class="btn" id="closePopup">Đã hiểu</button>
-  </div>
-</div>
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
-/* ===== FIREWORKS ===== */
-const c=document.getElementById("fx"),x=c.getContext("2d");
-let W,H;function rs(){W=c.width=innerWidth;H=c.height=innerHeight}
-rs();addEventListener("resize",rs);
-let p=[];
+/* ================== Fireworks ================== */
+const cv = document.getElementById("fx");
+const ctx = cv.getContext("2d");
+let W,H; function resize(){ W=cv.width=innerWidth; H=cv.height=innerHeight; }
+resize(); addEventListener("resize", resize);
+
+let parts = [];
 function boom(x0,y0){
-  for(let i=0;i<60;i++)
-    p.push({x:x0,y:y0,a:Math.random()*Math.PI*2,s:Math.random()*5+2});
+  for(let i=0;i<70;i++){
+    parts.push({x:x0,y:y0,a:Math.random()*Math.PI*2,s:Math.random()*5+2});
+  }
 }
-(function draw(){
-  x.clearRect(0,0,W,H);
-  p.forEach(o=>{
-    o.x+=Math.cos(o.a)*o.s;
-    o.y+=Math.sin(o.a)*o.s;
-    o.s*=0.95;
-    x.fillStyle="gold";
-    x.fillRect(o.x,o.y,3,3);
-  });
-  p=p.filter(o=>o.s>0.6);
-  requestAnimationFrame(draw);
+(function anim(){
+  ctx.clearRect(0,0,W,H);
+  for(const p of parts){
+    p.x += Math.cos(p.a)*p.s;
+    p.y += Math.sin(p.a)*p.s;
+    p.s *= 0.95;
+    ctx.fillStyle = "gold";
+    ctx.fillRect(p.x,p.y,3,3);
+  }
+  parts = parts.filter(p=>p.s>0.6);
+  requestAnimationFrame(anim);
 })();
 
-/* ===== UTIL ===== */
-function norm(s){
-  return s.toLowerCase().normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/đ/g,"d").trim();
+function boomCorners(){
+  boom(0,0); boom(W,0); boom(0,H); boom(W,H);
 }
-const allow=["nga","hoa","trang","thai"];
 
-/* ===== POPUP ===== */
-const popup=document.getElementById("popup");
-document.getElementById("closePopup").onclick = (e) => {
-  e.stopPropagation();       // ⛔ chặn bubbling
-  popup.classList.add("hidden");
-};
+/* ================== Normalize Vietnamese ================== */
+function normalizeVN(str){
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/đ/g,"d")
+    .trim();
+}
 
-popup.onclick = (e) => {
-  if (e.target === popup) {
-    popup.classList.add("hidden");
+/* ================== DOM ================== */
+const inputName = document.getElementById("guestName");
+const err = document.getElementById("err");
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+const ask = document.getElementById("ask");
+
+const invite = document.getElementById("invite");
+const guest = document.getElementById("guest");
+const statusText = document.getElementById("statusText");
+
+const btnNext = document.getElementById("btnNext");
+const btnYes = document.getElementById("btnYes");
+const btnNo  = document.getElementById("btnNo");
+const boomBtn = document.getElementById("boomBtn");
+
+const dEl=document.getElementById("d");
+const hEl=document.getElementById("h");
+const mEl=document.getElementById("m");
+const sEl=document.getElementById("s");
+const countHint=document.getElementById("countHint");
+
+/* ================== Rules ================== */
+const allow = ["nga","hoa","trang","thai"];
+
+/* ================== Countdown to 19:30 ================== */
+function getNext1930(){
+  const now = new Date();
+  const t = new Date(now);
+  t.setHours(19,30,0,0);
+  if(t.getTime() <= now.getTime()){
+    t.setDate(t.getDate()+1);
   }
-};
+  return t;
+}
+let target = getNext1930();
 
-/* ===== FLOW ===== */
-const step1=document.getElementById("step1");
-const step2=document.getElementById("step2");
-const invite=document.getElementById("invite");
-const guest=document.getElementById("guest");
-const ask=document.getElementById("ask");
-const status=document.getElementById("status");
-const guestName=document.getElementById("guestName");
+function pad2(n){ return String(n).padStart(2,"0"); }
 
-btnNext.onclick=()=>{
-  const raw=guestName.value.trim();
-  if(raw==="") return;                // ⛔ chưa nhập thì không làm gì
-  if(!allow.includes(norm(raw))){
-    popup.classList.remove("hidden");
+function tickCountdown(){
+  const now = new Date();
+  let diff = target.getTime() - now.getTime();
+
+  if(diff <= 0){
+    // đã tới giờ => đặt lại sang ngày mai 19:30
+    target = getNext1930();
+    diff = target.getTime() - now.getTime();
+  }
+
+  const sec = Math.floor(diff/1000);
+  const days = Math.floor(sec/86400);
+  const hours = Math.floor((sec%86400)/3600);
+  const mins = Math.floor((sec%3600)/60);
+  const secs = sec%60;
+
+  dEl.textContent = pad2(days);
+  hEl.textContent = pad2(hours);
+  mEl.textContent = pad2(mins);
+  sEl.textContent = pad2(secs);
+
+  // gợi ý ngày giờ mục tiêu
+  const dd = pad2(target.getDate());
+  const MM = pad2(target.getMonth()+1);
+  countHint.textContent = `⏳ Đếm ngược tới 19h30 (${dd}/${MM})`;
+}
+setInterval(tickCountdown, 1000);
+tickCountdown();
+
+/* ================== Flow ================== */
+function goNext(){
+  const raw = inputName.value.trim();
+  const n = normalizeVN(raw);
+
+  if(!allow.includes(n)){
+    err.textContent = "Tên này không nằm trong danh sách gia đình 😊";
     return;
   }
+
+  err.textContent = "";
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
-  ask.innerText=`${raw} ơi, tối nay đi tất niên cùng gia đình nhé?`;
-};
-
-yes.onclick=()=>finish(true);
-no.onclick=()=>finish(false);
-
-function finish(ok){
-  step2.classList.add("hidden");
-  invite.style.display="block";
-  guest.innerText=`${guestName.value} thân mến`;
-
-  if(ok){
-    status.innerHTML="🎉 Rất vui vì có bạn tham gia!";
-    boom(0,0);boom(W,0);boom(0,H);boom(W,H);
-  }else{
-    status.innerHTML=`
-      <div class="sad">
-        <h3>🥀 Bàn tiệc hôm nay thật buồn…</h3>
-        <p>Vì thiếu vắng bạn, bữa tiệc không còn trọn vẹn 😔</p>
-      </div>`;
-  }
+  ask.textContent = `${raw} ơi, tối nay đi tất niên cùng gia đình nhé?`;
 }
 
-/* ===== COUNTDOWN 14/02 19:30 ===== */
-const target=new Date(new Date().getFullYear(),1,14,19,30);
-if(new Date()>target)target.setFullYear(target.getFullYear()+1);
+function finish(ok){
+  const raw = inputName.value.trim();
 
-setInterval(()=>{
-  let diff=target-new Date();
-  const s=Math.max(0,Math.floor(diff/1000));
-  d.innerText=Math.floor(s/86400);
-  h.innerText=Math.floor(s%86400/3600);
-  m.innerText=Math.floor(s%3600/60);
-  document.getElementById("s").innerText=s%60;
-},1000);
+  // lưu local
+  localStorage.setItem("yearend_"+raw, ok ? "Có" : "Không");
+
+  step2.classList.add("hidden");
+  invite.style.display="block";
+  guest.textContent = `${raw} thân mến`;
+
+  statusText.textContent = ok ? "Có tham gia 🎉" : "Không tham gia 😢";
+
+  if(ok) boomCorners();
+}
+
+btnNext.addEventListener("click", goNext);
+inputName.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter"){ e.preventDefault(); goNext(); }
+});
+btnYes.addEventListener("click", ()=>finish(true));
+btnNo.addEventListener("click", ()=>finish(false));
+boomBtn.addEventListener("click", boomCorners);
+
+/* ================== YouTube Music ================== */
+let ytPlayer = null;
+let ytReady = false;
+let playing = false;
+
+// Video ID của link bạn gửi: KdG2k8WHexA
+const YT_VIDEO_ID = "KdG2k8WHexA";
+
+function onYouTubeIframeAPIReady(){
+  ytPlayer = new YT.Player("player", {
+    height: "220",
+    width: "100%",
+    videoId: YT_VIDEO_ID,
+    playerVars: {
+      autoplay: 0,
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+      playsinline: 1
+    },
+    events: {
+      onReady: () => { ytReady = true; },
+      onStateChange: (e) => {
+        // 1 = playing, 2 = paused
+        if(e.data === 1){
+          playing = true;
+          document.getElementById("musicToggle").textContent = "⏸ Tắt nhạc";
+        }else if(e.data === 2 || e.data === 0){
+          playing = false;
+          document.getElementById("musicToggle").textContent = "▶ Bật nhạc";
+        }
+      }
+    }
+  });
+}
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+const musicToggle = document.getElementById("musicToggle");
+const ytWrap = document.getElementById("ytWrap");
+
+musicToggle.addEventListener("click", ()=>{
+  ytWrap.style.display = "block";
+
+  // API có thể chưa kịp ready trong vài tích tắc
+  if(!ytPlayer || !ytReady){
+    // cố gắng lại sau 300ms
+    setTimeout(()=>musicToggle.click(), 300);
+    return;
+  }
+
+  if(!playing){
+    ytPlayer.playVideo(); // cần user click => OK
+    boomCorners();
+  }else{
+    ytPlayer.pauseVideo();
+  }
+});
 </script>
 
 </body>
